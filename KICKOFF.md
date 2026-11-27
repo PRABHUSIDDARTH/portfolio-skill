@@ -22,7 +22,8 @@ If you cannot open it, say so and follow the rules below.
    Wait for my approval before writing any UI code.
 4. Build. New project: Astro with static output. Existing project: keep its stack.
 5. Never invent metrics, testimonials, reviews or customers. Leave a section out
-   if there is nothing real to put in it. My taste wins over your habits.
+   if there is nothing real to put in it. Never ship a dead or made-up link: ask me
+   for the real one. My taste wins over your habits.
 6. Search readiness: main text readable without JavaScript, a unique title and
    description per page, canonical URLs (ask me for the domain), sitemap,
    robots.txt, social card, direct answers and a visible FAQ only for real

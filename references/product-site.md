@@ -14,6 +14,8 @@ A site for one product. It has to answer, in order: what is it, is it for me, do
 | FAQ | Questions people really ask, answered directly | Real questions exist or follow from the product's facts |
 | Docs link | Where to start using it | Docs or a README exist |
 
+**The primary action needs a real destination.** If the link, form or repository does not exist yet, ask for it. If there is none, leave the button out and tell the user the page has no action. Never ship a dead or made-up link.
+
 **Omit a section rather than fill it.** No placeholder logos, invented testimonials, made-up counts or "coming soon" prices. For an unreleased product, say it is unreleased and make the action a waitlist or repository link.
 
 ## Pages
