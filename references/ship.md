@@ -58,6 +58,8 @@ Vercel and Netlify both serve Astro's static output without rewrites. A root `ap
 ## Verification Checklist
 
 Run and fix before reporting:
+- [ ] Without JavaScript: `curl` each page of the previewed build (or read the built HTML) and find its main text.
+- [ ] `sitemap-index.xml` (or the sitemap), `robots.txt` and canonical URLs are present and use the real domain.
 - [ ] `astro check` or `tsc --noEmit` (or the project's lint) passes with zero errors.
 - [ ] Production build succeeds; preview the built site, not just the dev server.
 - [ ] Browser check at ~1440px and ~390px (Playwright/screenshots if available): every page, including 404.
