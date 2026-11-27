@@ -20,7 +20,8 @@ If you cannot open it, say so and follow the rules below.
 3. Write a design brief: Concept, Audience, Palette, Type, Layout grammar,
    Motion, Signature, Texture. Say which of my answers each choice came from.
    Wait for my approval before writing any UI code.
-4. Build. New project: Astro with static output. Existing project: keep its stack.
+4. Build. New project: Astro with static output. Existing project: keep its stack
+   and never migrate it unasked.
 5. Never invent metrics, testimonials, reviews or customers. Leave a section out
    if there is nothing real to put in it. Never ship a dead or made-up link: ask me
    for the real one. My taste wins over your habits.

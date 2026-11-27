@@ -6,6 +6,8 @@ Read when the site is about a person. Copy rules apply to product sites too.
 
 ### Information architecture
 
+Every section and item below (stats, flagships, case-study pages, demos, metrics) appears only if real material exists. One flagship is fine; no stats means no stats row.
+
 Home (single scroll):
 1. **Hero:** name, one-line positioning, 1-2 sentence lede, primary CTA (see work) + secondary (resume / contact), small meta row (role, focus areas, location, availability).
 2. **Statement / About:** 2-4 sentences in the person's voice, plus 3-4 stats that are true (projects shipped, years, users, stars, CGPA if a student).
@@ -21,8 +23,8 @@ Case-study page per flagship: themed hero (name, tagline, role, stack, links), p
 
 ### Copy rules
 
-- First person, plain, specific. Lead with what was built and why it matters, then how.
-- Good: "Connect your own AWS, GCP and Azure accounts and their free tiers act as one disk." Bad: "A revolutionary cloud solution leveraging cutting-edge technology."
+- Portfolios speak in first person; product sites speak to the visitor ("you") or about the product. Plain and specific. Lead with what was built and why it matters, then how.
+- Good: "Photograph a receipt and the expense line fills itself in." Bad: "A revolutionary cloud solution leveraging cutting-edge technology."
 - Banned filler: passionate, cutting-edge, leverage, seamless, robust, innovative, journey, delve, "I love to code".
 - Every metric is sourced or omitted. Never fabricate.
 - Microcopy has personality but stays clear ("Lost in the reel." on 404, "Scroll to pan" hints).
@@ -36,10 +38,10 @@ export const PROFILE = { name, role, location, email, github, linkedin, resume: 
 export type Metric = { value: string; label: string };
 export type Flagship = {
   slug: string; path: string; index: string; name: string; kicker: string; tagline: string;
-  summary: string; role: string; stack: string[]; metrics: Metric[]; repo: string;
+  summary: string; role: string; stack: string[]; metrics?: Metric[]; repo?: string;
   accent: string; bg: string; fg: string;          // per-project theme
 };
-export const FLAGSHIPS: Flagship[] = [ /* 2-4 */ ];
+export const FLAGSHIPS: Flagship[] = [ /* up to 4, only real ones */ ];
 export type WorkKind = 'Systems' | 'AI' | 'Mobile' | 'Web'; // adapt to the person
 export const WORKS: { name: string; blurb: string; stack: string[]; kind: WorkKind; year: string; href: string; route?: string }[] = [];
 export const CAPABILITIES: { title: string; items: string[] }[] = [];

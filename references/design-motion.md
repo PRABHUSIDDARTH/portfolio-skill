@@ -4,7 +4,9 @@ Read when writing the design brief and building the UI. Used by both modes.
 
 ## Art Direction
 
-### Derive the theme from the person
+### Derive the theme from the subject
+
+For a product, derive it from who uses it, what it is for, the objects and language of that world, and the sites the user likes and hates. The table below is for people.
 
 Ask: who will view this, what should they feel in 5 seconds, what does this person's work look like? Map that to a concept. User-specified brand colors, fonts, or themes always win.
 
@@ -49,8 +51,8 @@ Texture:        grain / grid lines / none / shader
   --text: <text face>, <fallbacks>;
   --mono: <mono face>, <fallbacks>;
   /* rhythm */
-  --gutter: clamp(1.1rem, 3.2vw, 2.75rem);
-  --ease: cubic-bezier(.16, 1, .3, 1);
+  --gutter: <from the brief's layout grammar>;
+  --ease: <from the brief's motion personality>;
   /* page-level aliases so case-study pages can re-theme by overriding these */
   --page-bg: var(--bg); --page-fg: var(--fg); --page-muted: var(--muted);
   --page-line: var(--line); --page-accent: var(--accent);
@@ -68,7 +70,9 @@ Components only reference `--page-*`. A case-study page sets new `--page-*` valu
 - Use italics or a weight shift on one word in a headline for voice ("The ones I'd *demo first.*").
 - `font-variant-numeric: tabular-nums` for counters and stats.
 
-### Layout grammar
+### Example: editorial layout
+
+Use the approved brief's Layout grammar and Motion. The rules in this section and the motion values below describe one editorial direction; apply them only if the brief asks for it.
 
 - Full-bleed hero (`min-height: 100svh`), content anchored bottom-left or across a grid, not dead-centered.
 - Section headers as a thin rule with numbered mono label left and context right.
@@ -88,10 +92,12 @@ The code examples use React hooks. Without React, run the same GSAP calls from a
 
 ### Principles
 
-- One house ease (e.g. `expo.out` / `cubic-bezier(.16,1,.3,1)`), durations 0.6-1.4s for reveals, 0.3-0.6s for hovers.
+The brief decides the motion. Accessibility and performance rules here always apply; style choices (ease, durations, masked reveals, preloader) are examples.
+
+- One house ease, from the brief (e.g. `expo.out` / `cubic-bezier(.16,1,.3,1)`), durations 0.6-1.4s for reveals, 0.3-0.6s for hovers.
 - Animate `transform`, `opacity`, `clip-path` only. Never animate layout properties.
-- Masked reveals (text rising out of an `overflow:hidden` box) look premium; plain fades look cheap.
-- Choreograph: hero intro waits for the preloader/curtain to clear (shared `intro.delay`).
+- Choose the reveal style from the concept: masked reveals, plain fades or none.
+- If there is a preloader or curtain, the hero intro waits for the preloader/curtain to clear (shared `intro.delay`).
 - Every effect is gated by `prefersReducedMotion`; pointer effects also by `(pointer: coarse)`.
 - Use `gsap.from()` inside `useGSAP` so content is visible if JS fails. Never leave content at `opacity:0` in CSS.
 
@@ -171,6 +177,8 @@ CSS: `.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:
 
 This is a menu, not a default. Inventing a moment from the subject beats picking one, and quiet sites may need none. If the brief would suit any other person or product, change it.
 
+Astro builds a multi-page site. Page transitions (route curtain, shared-element handoff) need Astro's `<ClientRouter />`, and scripts must set up again on `astro:page-load`. Otherwise skip them.
+
 - **Preloader counter:** 000->100 counter + progress bar, real readiness = `document.fonts.ready` raced against a ~1.2s cap; exits with `clipPath: inset(0 0 100% 0)`; sets `intro.delay` so the hero starts as it lifts; stops scroll while visible. Skip entirely under reduced motion.
 - **Route curtain:** fixed full-screen layer, `clip-path` wipes in from bottom (0.8s expo.inOut), destination name rises in a mask, page swaps while covered, curtain wipes out the top. Curtain color = destination project's accent. Guard with a `busy` ref.
 - **Pinned horizontal reel:** inside `gsap.matchMedia('(min-width:1001px) and (prefers-reduced-motion:no-preference)')`, pin the section and tween the track `x` to `-(scrollWidth - innerWidth)` with `scrub: 0.6`, `invalidateOnRefresh: true`, `end: () => '+=' + distance()`. Parallax inner visuals with `containerAnimation`. Add a progress hairline. Below breakpoint: vertical stack, `transform:none !important`.
@@ -179,7 +187,7 @@ This is a menu, not a default. Inventing a moment from the subject beats picking
 - **Mobile menu:** full-screen overlay revealed by clip-path, big staggered links, stops scroll, Escape closes, closes on route change, `aria-expanded`/`aria-controls` on the button.
 - **Hover language:** pill buttons with a fill sliding up from below (`::before translateY(101%) -> 0`), underline links scaling from right to left, index rows with a full-width fill wiping up and the name nudging right, arrows translating diagonally.
 - **Nav with `mix-blend-mode: difference`:** stays legible over any section color.
-- **Interactive case-study demo:** small, honest re-implementation of the project's core logic (a router score simulator, an SDK playground, a themed phone mockup, a sortable benchmark table). Keyboard operable. Label it illustrative if simplified.
+- **Interactive case-study demo:** small, honest re-implementation of the project's core logic (a pricing calculator, an API playground, a themed phone mockup, a sortable benchmark table). Keyboard operable. Label it illustrative if simplified.
 
 ### WebGL background (optional, `Field.tsx`)
 
@@ -227,7 +235,7 @@ Ambition must match the person and the timeline. A full 3D world takes weeks of 
 - **Shared-element handoff:** the clicked project's thumbnail scales and moves into the next page's hero position (FLIP: measure first/last, invert, play; or GSAP Flip plugin).
 - **Velocity-driven image distortion:** render key images as textured planes in a WebGL layer synced to DOM positions. A fragment shader takes scroll velocity as a uniform and bends or RGB-shifts edges. Keep real `<img>` elements in the DOM (visually hidden or as fallback) for accessibility and SEO.
 - **Shader-on-enter:** images bend or color-shift slightly as they enter the viewport, a subtle post-processing layer CSS can't do.
-- **Horizontal pan:** translate vertical scroll into horizontal movement of a track, like a camera panning (pinned ScrollTrigger; see 6.4).
+- **Horizontal pan:** translate vertical scroll into horizontal movement of a track, like a camera panning (pinned ScrollTrigger; see Pinned horizontal reel above).
 - **DOM over WebGL for text:** never rebuild long text or UI inside a canvas. Layer real HTML over the 3D scene, or use three.js `CSS3DRenderer` to place an HTML/iframe "screen" inside the 3D perspective (Henry Heffernan's retro computer monitor). Text stays crisp, selectable, and accessible.
 - **Gamified bio:** turn About details into discoverable objects (collectibles, clickable props). Always provide a plain, accessible fallback path (a "skip to info" or standard page) so recruiters can get facts in 10 seconds.
 - **Shared presence (optional):** small, moderated, asynchronous social touches (global counters, short notes left by visitors) make a site feel alive. Moderate user text before rendering. Treat this as scope expansion and ask first.

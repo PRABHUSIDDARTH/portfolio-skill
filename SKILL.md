@@ -33,7 +33,7 @@ Not covered: dashboards, e-commerce, app interfaces.
 1. **One art direction** drives type, color, layout, motion and tone.
 2. **Only real content.** No invented metrics, testimonials, reviews or customers. No proof means no section.
 3. **The user's taste wins** over every example in these files. No example is a default.
-4. **Readable without JavaScript.** The main text of every page is in the HTML.
+4. **Readable without JavaScript.** The main text of every page is in the HTML. For an existing client-rendered app, follow [references/search.md](references/search.md) and never migrate it unasked.
 5. **Works from 360px to ultrawide,** by keyboard, at WCAG AA contrast, with reduced motion respected.
 6. **No promises** about search ranking or being cited by AI assistants.
 7. **It ships:** type check and production build pass.
